@@ -36,6 +36,19 @@ public class User {
 	@OneToMany(targetEntity = Certificate.class,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name="userId", referencedColumnName = "userId")
     List<Certificate> certies;
+	
+	@OneToMany(targetEntity = Comment.class,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name="userId", referencedColumnName = "userId")
+    List<Comment> comments;
+	
+	@OneToMany(targetEntity = EnrolledCourses.class,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name="userId", referencedColumnName = "userId")
+    List<EnrolledCourses> enrolledcourses;
+	
+	@OneToMany(targetEntity = Feedback.class,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name="userId", referencedColumnName = "userId")
+    List<Feedback> feedbacks;
+
 //	
 //	 @OneToOne(fetch = FetchType.LAZY,
 //	    		optional = false)
@@ -49,6 +62,12 @@ public class User {
 
 	public String getUsername() {
 		return username;
+	}
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 	public void setUsername(String username) {
 		this.username = username;
@@ -101,4 +120,30 @@ public class User {
 	public void setProfile(Profile profile) {
 		this.profile = profile;
 	}
+	public User(int userId, List<Comment> comments) {
+		super();
+		this.userId = userId;
+		this.comments = comments;
+	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
+	public List<Certificate> getCerties() {
+		return certies;
+	}
+	public void setCerties(List<Certificate> certies) {
+		this.certies = certies;
+	}
+	public List<Comment> getComments() {
+		return comments;
+	}
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
+	
+	
+	
 }

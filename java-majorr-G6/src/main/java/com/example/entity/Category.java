@@ -28,4 +28,86 @@ public class Category {
     @OneToMany(targetEntity = Course.class,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name="categoryId", referencedColumnName = "categoryId")
     List<Course> courses;
+
+
+
+	public Category(String categoryName, String categoryDesc, String categoryLogo,
+			List<Course> courses) {
+		super();
+		
+		this.categoryName = categoryName;
+		this.categoryDesc = categoryDesc;
+		this.categoryLogo = categoryLogo;
+		this.courses = courses;
+	}
+
+
+
+	public Category() {
+		super();
+	}
+
+
+
+	public int getCategoryId() {
+		return categoryId;
+	}
+
+
+
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
+	}
+
+
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+
+
+
+	public String getCategoryDesc() {
+		return categoryDesc;
+	}
+
+
+
+	public void setCategoryDesc(String categoryDesc) {
+		this.categoryDesc = categoryDesc;
+	}
+
+
+
+	public String getCategoryLogo() {
+		return categoryLogo;
+	}
+
+
+
+	public void setCategoryLogo(String categoryLogo) {
+		this.categoryLogo = categoryLogo;
+	}
+
+
+
+	public List<Course> getCourses() {
+		return courses;
+	}
+
+
+
+	public void setCourses(List<Course> courses) {
+		this.courses = courses;
+	}
+	
+	
+    
+    
 }
