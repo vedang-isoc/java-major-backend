@@ -28,4 +28,14 @@ public class Category {
     @OneToMany(targetEntity = Course.class,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name="categoryId", referencedColumnName = "categoryId")
     List<Course> courses;
+
+
+
+	public Category(String categoryName, String categoryDesc, String categoryLogo, List<Course> courses) {
+		super();
+		this.categoryName = categoryName;
+		this.categoryDesc = categoryDesc;
+		this.categoryLogo = categoryLogo;
+		this.courses = courses;
+	}
 }

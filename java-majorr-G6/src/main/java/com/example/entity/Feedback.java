@@ -29,5 +29,24 @@ public class Feedback {
 	@ManyToOne(targetEntity = User.class,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name="userId", referencedColumnName = "userId")
 	private User user;
+
+	public Feedback(int feedbackId, String feedback, Course course, User user) {
+		super();
+		this.feedbackId = feedbackId;
+		this.feedback = feedback;
+		this.course = course;
+		this.user = user;
+	}
+
+	public Feedback(String feedback, Course course, User user) {
+		super();
+		this.feedback = feedback;
+		this.course = course;
+		this.user = user;
+	}
+
+	public Feedback() {
+		super();
+	}
 	
 }

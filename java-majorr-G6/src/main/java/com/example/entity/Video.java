@@ -1,9 +1,12 @@
 package com.example.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -14,66 +17,71 @@ public class Video {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int videoId;
 
-	public Video() {
-		super();
-	}
-
 	private String videoName;
 	private String videoDesc;
 	private String videoPath;
 
-	@JsonInclude
-	@Transient
-	private String courseName;
+	
 
-	public Video(String videoName, String videoDesc, String videoPath) {
-		super();
-		this.videoName = videoName;
-		this.videoDesc = videoDesc;
-		this.videoPath = videoPath;
-	}
-
-	protected int getVideoId() {
+	public int getVideoId() {
 		return videoId;
 	}
 
-	protected void setVideoId(int videoId) {
+	public void setVideoId(int videoId) {
 		this.videoId = videoId;
 	}
 
-	protected String getVideoName() {
+	public String getVideoName() {
 		return videoName;
 	}
 
-	protected void setVideoName(String videoName) {
+	public void setVideoName(String videoName) {
 		this.videoName = videoName;
 	}
 
-	protected String getVideoDesc() {
+	public String getVideoDesc() {
 		return videoDesc;
 	}
 
-	protected void setVideoDesc(String videoDesc) {
+	public void setVideoDesc(String videoDesc) {
 		this.videoDesc = videoDesc;
 	}
 
-	protected String getVideoPath() {
+	public String getVideoPath() {
 		return videoPath;
 	}
 
-	protected void setVideoPath(String videoPath) {
+	public void setVideoPath(String videoPath) {
 		this.videoPath = videoPath;
 	}
 
-	protected String getCourseName() {
-		return courseName;
-	}
-
-	protected void setCourseName(String courseName) {
-		this.courseName = courseName;
-	}
-
 	
+
+	public Video(int videoId, String videoName, String videoDesc, String videoPath) {
+		super();
+		this.videoId = videoId;
+		this.videoName = videoName;
+		this.videoDesc = videoDesc;
+		this.videoPath = videoPath;
+		
+	}
+
+	public Video() {
+		super();
+	}
+	@ManyToOne(targetEntity = Course.class, fetch = FetchType.EAGER)
+	@JoinColumn(name="courseId", referencedColumnName = "courseId")
+	private Course course;
+
+	public String getCourse() {
+		return course.getCourseName();
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
+	}
+
+
 	
 	
 }
