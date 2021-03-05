@@ -78,6 +78,14 @@ public class AdminController {
 		return asi.updateCategory(c);
 
 	}
+	
+	// total categories
+	@GetMapping("/category/total")
+	public long totalCategory() {
+		return asi.getCategoryCount();
+	}
+	
+	
 
 	// show all courses
 	@GetMapping("/course")
@@ -98,7 +106,7 @@ public class AdminController {
 	}
 
 	// add course
-	@PostMapping("/{cat_id}")
+	@PostMapping("/course/{cat_id}")
 	public boolean addCourse(@RequestBody Course c, @PathVariable int cat_id) {
 		return asi.addCourse(c, cat_id);
 	}
@@ -117,6 +125,13 @@ public class AdminController {
 
 	}
 
+	// total courses
+		@GetMapping("/course/total")
+		public long totalCourses() {
+			return asi.getCourseCount();
+		}
+	
+	
 	// show all videos
 	@GetMapping("/video")
 	public ResponseEntity<List<Video>> AllVideos() {
@@ -135,13 +150,13 @@ public class AdminController {
 	}
 
 	// add video
-	@PostMapping("/video")
+	@PostMapping("/video/add")
 	public boolean addVideo(@RequestBody Video c) {
 		return asi.addVideo(c);
 	}
 
 	// delete video
-	@DeleteMapping("/video/{id}")
+	@DeleteMapping("/video/delete/{id}")
 	public void deleteVideo(@PathVariable int id) {
 		asi.deleteVideo(id);
 	}
@@ -151,6 +166,13 @@ public class AdminController {
 	public boolean updateVideo(@RequestBody Video v, @PathVariable int v_id) {
 		v.setVideoId(v_id);
 		return asi.updateVideo(v);
+	}
+	
+	
+	// total courses
+	@GetMapping("/video/total")
+	public long totalVideos() {
+		return asi.getVideoCount();
 	}
 
 }

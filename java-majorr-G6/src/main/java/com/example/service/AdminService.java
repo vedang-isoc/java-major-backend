@@ -38,5 +38,11 @@ public interface AdminService {
 
 	boolean updateVideo(Video v);
 	
+	public long getCategoryCount();
+
+	public long getCourseCount();
+	
+	public long getVideoCount();
+	
 	
 }

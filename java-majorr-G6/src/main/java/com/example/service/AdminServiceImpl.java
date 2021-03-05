@@ -111,4 +111,22 @@ public class AdminServiceImpl implements AdminService{
 
 	}
 
+	@Override
+	public long getCategoryCount() {
+		return cat.count();
+	}
+	
+	
+	
+	@Override
+	public long getCourseCount() {
+		return cou.count();
+	}
+	
+	
+	@Override
+	public long getVideoCount() {
+		return cou.count();
+	}
+
 }
