@@ -27,4 +27,15 @@ public class Like {
 	@JoinColumn(name="userId", referencedColumnName = "userId")
 	private User user;
 	
+	
+	
+	public Like() {
+		super();
+	}
+//
+	public Like(Course course, User user) {
+		super();
+		this.course = course;
+		this.user = user;
+	}
 }
