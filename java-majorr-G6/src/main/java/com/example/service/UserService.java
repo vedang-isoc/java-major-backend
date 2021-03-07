@@ -13,5 +13,6 @@ public interface UserService {
 	public boolean addFeedback(String feedback,int uid,int cid);
 	public List<Course> getEnrolledCourse(int uid);
 	public List<Video> getEnrolledCourseVideo(int uid,int cid);
+	public boolean Enroll(int cid,int uid);
 
 }

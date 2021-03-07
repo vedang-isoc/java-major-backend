@@ -60,5 +60,15 @@ public class UserController {
 	public List<Video> getVideo(@PathVariable int cid){
 		return uservice.getEnrolledCourseVideo(4,cid);
 	}
+	@PutMapping(path="enroll/{cid}/{uid}")
+	public String enroll(@PathVariable int cid,@PathVariable int uid) {
+		
+		//11 is the user id
+		boolean status=uservice.Enroll(cid, uid);
+		if(status) {
+			return "Enrolled";
+		}
+		return "can not enroll";
+	}
 
 }

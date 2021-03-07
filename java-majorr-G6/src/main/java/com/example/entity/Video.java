@@ -1,5 +1,8 @@
 package com.example.entity;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -7,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -66,13 +71,34 @@ public class Video {
 		
 	}
 
+	public Video(String videoName, String videoDesc, String videoPath) {
+		super();
+		this.videoName = videoName;
+		this.videoDesc = videoDesc;
+		this.videoPath = videoPath;
+	}
+
 	public Video() {
 		super();
 	}
-	@ManyToOne(targetEntity = Course.class, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = Course.class, fetch = FetchType.LAZY)
 	@JoinColumn(name="courseId", referencedColumnName = "courseId")
 	private Course course;
+	
+	@OneToMany(targetEntity = EnrolledCourseVideo.class,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name="videoId", referencedColumnName = "videoId")
+    List<EnrolledCourseVideo> ecvideos;
+	
+	
+	//@ManyToOne(targetEntity = EnrolledCourseVideo.class,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    //@JoinColumn(name="videoId", referencedColumnName = "videoId")
+    //EnrolledCourseVideo ecv;
 
+	//@ManyToOne(targetEntity = EnrolledCourses.class, fetch = FetchType.LAZY)
+	//@JoinColumn(name="ecvId", referencedColumnName = "ecvId")
+	//private EnrolledCourseVideo ecv;
+	
+	
 	public String getCourse() {
 		return course.getCourseName();
 	}

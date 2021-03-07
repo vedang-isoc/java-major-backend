@@ -13,6 +13,7 @@ import com.example.entity.Course;
 import com.example.entity.EnrolledCourseVideo;
 import com.example.entity.Profile;
 import com.example.entity.User;
+import com.example.entity.Video;
 import com.example.repositiories.CategoryRepo;
 import com.example.repositiories.ProfileRepo;
 import com.example.repositiories.UserRepo;
@@ -40,18 +41,29 @@ public class JavaMajorrG6Application implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
+//		Video vid1=new Video("r1", "react1", "r1.mp4");
+//		Video vid2=new Video("r2", "react2", "r2.mp4");
+//		List<Video> videos=new ArrayList<>();
+//		videos.add(vid2);videos.add(vid1);
 //		Course course=new Course("angular", "learn angular", null, 290, 0);
 //		Course course1=new Course("react", "learn react", null, 123, 0);
+//		course1.setVideo(videos);
 //		List<Course> courses=new ArrayList<>();
 //		courses.add(course1);courses.add(course);
 //		Category category=new Category("frontend", "learn frontend", null, courses);
 //		catr.save(category);
-//		Profile p=new Profile();
-//		User u=new User("uname", "xyz@gmail.com", "123xyz", true, true, "kjfsgbikrg");
-//		p.setUser(u);
-//		u.setProfile(p);
-//		ur.save(u);
+		Profile p=new Profile();
+		User u=new User("uname", "abc@gmail.com", "123xyz", true, true, "kjfsgbikrg");
+		p.setUser(u);
+		u.setProfile(p);
+		ur.save(u);
+
 		
+		//Profile p1=new Profile();
+	//	User u1=new User("uname2", "xyz@gmail.com", "123xyz", true, true, "kjfsgbikrg");
+		//p1.setUser(u);
+		//u1.setProfile(p);
+		//ur.save(u1);
 		
 	
 		//cr.save(c1);

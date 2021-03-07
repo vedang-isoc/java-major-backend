@@ -21,11 +21,6 @@ public class EnrolledCourses {
 	private Date startDate;
 	private Date endDate;
 	
-	
-
-	
-
-	
 	@ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
 	@JoinColumn(name="userId", referencedColumnName = "userId")
 	private User user;
@@ -34,9 +29,6 @@ public class EnrolledCourses {
 	@JoinColumn(name="courseId", referencedColumnName = "courseId")
 	private Course course;
 	
-//	@ManyToOne(targetEntity = Video.class,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//	@JoinColumn(name="videoId", referencedColumnName = "videoId")
-//	private Video video;
 	
 	@OneToMany(targetEntity = EnrolledCourseVideo.class,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name="ecourseId", referencedColumnName = "ecourseId")
@@ -91,6 +83,21 @@ public class EnrolledCourses {
 	public void setEcvideo(List<EnrolledCourseVideo> ecvideo) {
 		this.ecvideo = ecvideo;
 	}
+
+	public EnrolledCourses(Date startDate, Date endDate, User user, Course course, List<EnrolledCourseVideo> ecvideo) {
+		super();
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.user = user;
+		this.course = course;
+		this.ecvideo = ecvideo;
+	}
+
+	public EnrolledCourses() {
+		super();
+	}
+
+	
 	
 	
 }

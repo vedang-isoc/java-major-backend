@@ -1,5 +1,6 @@
 package com.example.service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.entity.Course;
+import com.example.entity.EnrolledCourseVideo;
 import com.example.entity.EnrolledCourses;
 import com.example.entity.Feedback;
 import com.example.entity.Like;
@@ -113,6 +115,25 @@ public class UserServiceImpl implements UserService{
 		List<Video> videos= vr.getVideo(uid,cid);
 		System.out.println(videos.size());
 		return videos;
+	}
+
+	@Override
+	public boolean Enroll(int cid,int uid) {
+		// TODO Auto-generated method stub
+		Optional<Course> course = cr.findById(cid); 
+		Optional<User> u=ur.findById(uid);
+		List<Video> videos=vr.findAllByCourse(course.get());
+		List<EnrolledCourseVideo> ecvideos=new ArrayList<>();
+		for (Video video : videos) {
+			EnrolledCourseVideo ecv=new EnrolledCourseVideo(0, false, video, null);
+			ecvideos.add(ecv);
+			
+		}
+		long millis=System.currentTimeMillis();
+		Date date=new java.sql.Date(millis);
+		EnrolledCourses ec=new EnrolledCourses( date, null, u.get(), course.get(), ecvideos);
+		ecr.save(ec);
+		return true;
 	}
 
 }
