@@ -1,5 +1,8 @@
 package com.example.entity;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -7,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -65,6 +69,9 @@ public class Video {
 		this.videoPath = videoPath;
 		
 	}
+	@OneToMany(targetEntity = EnrolledCourseVideo.class,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name="videoId", referencedColumnName = "videoId")
+    List<EnrolledCourseVideo> ecvideos;
 
 	public Video() {
 		super();
@@ -79,6 +86,13 @@ public class Video {
 
 	public void setCourse(Course course) {
 		this.course = course;
+	}
+
+	public Video(String videoName, String videoDesc, String videoPath) {
+		super();
+		this.videoName = videoName;
+		this.videoDesc = videoDesc;
+		this.videoPath = videoPath;
 	}
 
 

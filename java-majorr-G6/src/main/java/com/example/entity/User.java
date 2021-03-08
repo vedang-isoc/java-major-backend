@@ -104,8 +104,8 @@ public class User {
 		this.activated = true;
 		this.role="user";
 	}
-	public Profile getProfile() {
-		return profile;
+	public String getProfile() {
+		return profile.getFullName();
 	}
 	public void setProfile(Profile profile) {
 		this.profile = profile;

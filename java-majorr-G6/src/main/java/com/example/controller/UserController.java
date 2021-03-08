@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.entity.Course;
+import com.example.entity.User;
 import com.example.entity.Video;
 import com.example.service.UserService;
 
@@ -60,5 +61,40 @@ public class UserController {
 	public List<Video> getVideo(@PathVariable int cid){
 		return uservice.getEnrolledCourseVideo(4,cid);
 	}
+	@GetMapping(path="/lockedusers")
+	public List<User> getLocked(){
+		return uservice.getLockedAccount();
+	}
+	@PutMapping(path="/unlockuser")
+	public boolean unlock(){
+		return uservice.unlocakAccount(4); 
+	}
+	@PutMapping(path="/lockuser")
+	public boolean lock(){
+		return uservice.lockAccount(4);
+	}
+	@GetMapping(path="/generatePdf/{cid}")
+	public boolean generatepdf(@PathVariable int cid){
+		return uservice.generateCompeletionCerti(4, cid);
+	}
+	@PutMapping(path="enroll/{cid}/{uid}")
+	public String enroll(@PathVariable int cid,@PathVariable int uid) {
+		
+		//11 is the user id
+		boolean status=uservice.Enroll(cid, uid);
+		if(status) {
+			return "Enrolled";
+		}
+		return "can not enroll";
+	}
+	
+	@GetMapping(path="nextvideo/{cid}/{uid}/{vid}")
+	public boolean nextVideo(@PathVariable int cid,@PathVariable int uid,@PathVariable int vid) {
+		
+		
+		return uservice.nextVideo(cid, uid, vid);
+	}
+
+	
 
 }

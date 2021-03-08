@@ -91,6 +91,14 @@ public class EnrolledCourses {
 	public void setEcvideo(List<EnrolledCourseVideo> ecvideo) {
 		this.ecvideo = ecvideo;
 	}
+	public EnrolledCourses(Date startDate, Date endDate, User user, Course course, List<EnrolledCourseVideo> ecvideo) {
+		super();
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.user = user;
+		this.course = course;
+		this.ecvideo = ecvideo;
+	}
 	
 	
 }
