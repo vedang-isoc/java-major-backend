@@ -57,9 +57,9 @@ public class UserController {
 	public List<Course> getecourses(){
 		return uservice.getEnrolledCourse(4);
 	}
-	@GetMapping(path="/enrolledcourses/video/{cid}")
-	public List<Video> getVideo(@PathVariable int cid){
-		return uservice.getEnrolledCourseVideo(4,cid);
+	@GetMapping(path="/enrolledcourses/video/{cid}/{uid}")
+	public List<Video> getVideo(@PathVariable int cid,@PathVariable int uid){
+		return uservice.getEnrolledCourseVideo(uid,cid);
 	}
 	@GetMapping(path="/lockedusers")
 	public List<User> getLocked(){
@@ -93,6 +93,12 @@ public class UserController {
 		
 		
 		return uservice.nextVideo(cid, uid, vid);
+	}
+	@PostMapping(path="completevideo/{cid}/{uid}/{vid}")
+	public boolean completeVideo(@PathVariable int cid,@PathVariable int uid,@PathVariable int vid) {
+		
+		
+		return uservice.completeVideo(cid, uid, vid);
 	}
 
 	

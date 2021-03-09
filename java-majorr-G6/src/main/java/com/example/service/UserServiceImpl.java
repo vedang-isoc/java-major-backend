@@ -240,4 +240,25 @@ public class UserServiceImpl implements UserService{
 		return false;
 	}
 
+	@Override
+	public boolean completeVideo(int cid, int uid, int vid) {
+		Optional<Course> course = cr.findById(cid); 
+		Optional<Video> video = vr.findById(vid);
+		Optional<User> u=ur.findById(uid);
+		EnrolledCourses ec = ecr.findByUserAndCourse(u.get(), course.get());
+		List<EnrolledCourseVideo> ecvs = ec.getEcvideo();
+		for(int i=0;i<ecvs.size();i++) {
+			if(ecvs.get(i).getVideo()==vid) {
+			ecvs.get(i).setCompleted(true);
+			}
+			
+		}
+		ec.setEcvideo(ecvs);
+		ecr.save(ec);
+		
+		// TODO Auto-generated method stub
+		
+		return false;
+	}
+
 }
