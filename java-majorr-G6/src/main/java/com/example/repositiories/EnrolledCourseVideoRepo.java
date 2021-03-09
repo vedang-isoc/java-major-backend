@@ -12,5 +12,5 @@ import com.example.entity.Video;
 
 @Repository
 public interface EnrolledCourseVideoRepo extends JpaRepository<EnrolledCourseVideo, Integer>{
-	public List<EnrolledCourseVideo> findAllByEnrolledCourses(EnrolledCourses ec);
+	public List<EnrolledCourseVideo> findAllByEc(EnrolledCourses ec);
 }

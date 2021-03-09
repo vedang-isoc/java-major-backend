@@ -204,7 +204,7 @@ public class UserServiceImpl implements UserService{
 		List<Video> videos=vr.findAllByCourse(course.get());
 		List<EnrolledCourseVideo> ecvideos=new ArrayList<>();
 		for (Video video : videos) {
-			EnrolledCourseVideo ecv=new EnrolledCourseVideo(0, false, video, null);
+			EnrolledCourseVideo ecv=new EnrolledCourseVideo(0,false, video, null);
 			ecvideos.add(ecv);
 			
 		}
@@ -224,9 +224,12 @@ public class UserServiceImpl implements UserService{
 		Optional<User> u=ur.findById(uid);
 		EnrolledCourses ec = ecr.findByUserAndCourse(u.get(), course.get());
 		int ecid=ec.getEcourseId();
-		List<EnrolledCourseVideo> ecvs = ecvr.findAllByEnrolledCourses(ec);
+		List<EnrolledCourseVideo> ecvs = ecvr.findAllByEc(ec);
 		for(int i=0;i<ecvs.size();i++) {
 			if(ecvs.get(i).getVideo()==vid) {
+				if(i==0) {
+					return true;
+				}
 				if(ecvs.get(i-1).isCompleted()==true) {
 					return true;
 				}

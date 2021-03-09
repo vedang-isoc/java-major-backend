@@ -99,6 +99,10 @@ public class EnrolledCourses {
 		this.course = course;
 		this.ecvideo = ecvideo;
 	}
+
+	public EnrolledCourses() {
+		super();
+	}
 	
 	
 }
