@@ -250,6 +250,15 @@ public class UserServiceImpl implements UserService{
 		for(int i=0;i<ecvs.size();i++) {
 			if(ecvs.get(i).getVideo()==vid) {
 			ecvs.get(i).setCompleted(true);
+			if(i==ecvs.size()-1) {
+				long millis=System.currentTimeMillis();
+				Date date=new java.sql.Date(millis);
+				ec.setEndDate(date);
+				ec.setEcvideo(ecvs);
+				ecr.save(ec);
+				return true;
+				
+			}
 			}
 			
 		}
