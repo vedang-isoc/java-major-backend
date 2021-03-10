@@ -12,6 +12,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.entity.Certificate;
 import com.example.entity.Course;
 import com.example.entity.EnrolledCourseVideo;
 import com.example.entity.EnrolledCourses;
@@ -20,6 +21,7 @@ import com.example.entity.Like;
 import com.example.entity.Profile;
 import com.example.entity.User;
 import com.example.entity.Video;
+import com.example.repositiories.CertiRepo;
 import com.example.repositiories.CourseRepo;
 import com.example.repositiories.EnrolledCourseRepo;
 import com.example.repositiories.EnrolledCourseVideoRepo;
@@ -32,9 +34,14 @@ import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 @Service
@@ -56,6 +63,8 @@ public class UserServiceImpl implements UserService{
 	ProfileRepo pfr;
 	@Autowired
 	EnrolledCourseVideoRepo ecvr;
+	@Autowired
+	CertiRepo ctr;
 	
 
 	@Override
@@ -176,20 +185,67 @@ public class UserServiceImpl implements UserService{
 		System.out.println(profile.getFullName());
 		System.out.println(course.get().getCourseName());
 		EnrolledCourses ec=ecr.findByUserAndCourse(user.get(), course.get());
+		Date enddate = ec.getEndDate();
 		System.out.println(ec.getEndDate());
+		String pdfname=user.get().getUsername()+course.get().getCourseName();
 		Document document = new Document();
 		try {
-			PdfWriter.getInstance(document, new FileOutputStream("iTextHelloWorld.pdf"));
+			PdfWriter.getInstance(document, new FileOutputStream(pdfname+".pdf"));
 			document.open();
-			Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
-			Chunk chunk = new Chunk("Hello World", font);
+			Paragraph right=new Paragraph(Element.ALIGN_RIGHT);
+			Paragraph left=new Paragraph(Element.ALIGN_LEFT);
+			Font font = FontFactory.getFont(FontFactory.COURIER_BOLD, 30, BaseColor.BLACK);
+			Chunk chunk = new Chunk("Certificate Of Completion", font);
+			Paragraph preface = new Paragraph(chunk); 
+			preface.setAlignment(Element.ALIGN_CENTER);
+			document.add(preface);
 			
-			Path path = Paths.get(ClassLoader.getSystemResource("../../target/python.png").toURI());
+			Image img = Image.getInstance(course.get().getCourseLogo());
+	
 			
-			document.add(chunk);
-			Image img = Image.getInstance(path.toAbsolutePath().toString());
-			document.add(img);
+			right.add(img);
+			
+			Font font1 = FontFactory.getFont(FontFactory.COURIER_OBLIQUE, 15, BaseColor.GRAY);
+			Font font2 = FontFactory.getFont(FontFactory.TIMES_BOLD, 25, BaseColor.DARK_GRAY);
+			Chunk chunk1=new Chunk("This is to Certify that"+"\n",font1);
+			Chunk chunk2=new Chunk(profile.getFullName()+"\n",font2);
+			Chunk chunk3=new Chunk("has successfully completed "+course.get().getCourseName()+" course on date "+"\n",font1);
+			Chunk chunk4=new Chunk("'"+enddate+"'");
+		
+			PdfPCell leftcell=new PdfPCell();
+			leftcell.addElement(chunk1);leftcell.addElement(chunk2);leftcell.addElement(chunk3);leftcell.addElement(chunk4);
+			PdfPCell rightcell=new PdfPCell(img);
+			leftcell.setBorder(Rectangle.NO_BORDER);
+			rightcell.setBorder(Rectangle.NO_BORDER);
+			leftcell.setPaddingTop(100);
+			rightcell.setPaddingTop(100);
+			leftcell.setVerticalAlignment(5);
+			
+			
+			
+			
+			PdfPTable table = new PdfPTable(2);
+			table.setWidthPercentage(100);
+			table.addCell(leftcell);
+			table.addCell(rightcell);
+			table.setPaddingTop(2000);
+		
+	
+			
+		    
+		
+			document.add(table);
+			Image cybage = Image.getInstance("Cybage-e-learning-logo.png");
+			cybage.setAlignment(Element.ALIGN_CENTER);
+			cybage.setBackgroundColor(BaseColor.BLUE);
+			document.add(cybage);
+			
+		    
+			
 			document.close();
+			
+			Certificate certi=new Certificate(pdfname+".pdf", course.get(), user.get());
+			ctr.save(certi);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
