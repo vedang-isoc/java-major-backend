@@ -2,7 +2,10 @@ package com.example.service;
 
 import java.util.List;
 
+import com.example.entity.Course;
+
 public interface AdminService {
-	List<List<String>> getReport(List<String> keywords);
+	
+	public List<Course> courseStats(int cid);
 
 }

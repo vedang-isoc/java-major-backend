@@ -10,12 +10,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 
+/**
+ * @author vedangt
+ *
+ */
 @Entity
 public class Feedback {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int feedbackId;
 	private String feedback;
+	private int ratings;
 	
 //	@ManyToOne
 //	@JoinColumns({@JoinColumn(name="courseId", referencedColumnName = "courseId"),@JoinColumn(name="userId", referencedColumnName = "userId")})
@@ -47,6 +52,46 @@ public class Feedback {
 
 	public Feedback() {
 		super();
+	}
+
+	public int getFeedbackId() {
+		return feedbackId;
+	}
+
+	public void setFeedbackId(int feedbackId) {
+		this.feedbackId = feedbackId;
+	}
+
+	public String getFeedback() {
+		return feedback;
+	}
+
+	public void setFeedback(String feedback) {
+		this.feedback = feedback;
+	}
+
+	public int getRatings() {
+		return ratings;
+	}
+
+	public void setRatings(int ratings) {
+		this.ratings = ratings;
+	}
+
+	public Course getCourse() {
+		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 }

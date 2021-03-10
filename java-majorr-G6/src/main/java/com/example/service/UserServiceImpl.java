@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.entity.Certificate;
+import com.example.entity.Comment;
 import com.example.entity.Course;
 import com.example.entity.EnrolledCourseVideo;
 import com.example.entity.EnrolledCourses;
@@ -22,6 +23,7 @@ import com.example.entity.Profile;
 import com.example.entity.User;
 import com.example.entity.Video;
 import com.example.repositiories.CertiRepo;
+import com.example.repositiories.CommentRepo;
 import com.example.repositiories.CourseRepo;
 import com.example.repositiories.EnrolledCourseRepo;
 import com.example.repositiories.EnrolledCourseVideoRepo;
@@ -65,6 +67,8 @@ public class UserServiceImpl implements UserService{
 	EnrolledCourseVideoRepo ecvr;
 	@Autowired
 	CertiRepo ctr;
+	@Autowired
+	CommentRepo cmtr;
 	
 
 	@Override
@@ -326,4 +330,5 @@ public class UserServiceImpl implements UserService{
 		return false;
 	}
 
+	
 }

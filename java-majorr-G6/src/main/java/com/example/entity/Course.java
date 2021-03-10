@@ -32,6 +32,21 @@ public class Course {
 	@JsonInclude
 	@Transient
 	private String categoryName;
+	
+	@JsonInclude
+	@Transient
+	private int  avgrating;
+	
+	@JsonInclude
+	@Transient
+	private int enrollments;
+	
+	@JsonInclude
+	@Transient
+	private int totalcomment;
+	
+	
+	
 
 	@OneToMany(targetEntity = Video.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "courseId", referencedColumnName = "courseId")
@@ -130,10 +145,9 @@ public class Course {
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
-	@JsonIgnore
-	@JsonProperty(value = "video")
-	public List<Video> getVideo() {
-		return video;
+	
+	public int getVideo() {
+		return video.size();
 	}
 
 	public void setVideo(List<Video> video) {
@@ -166,6 +180,31 @@ public class Course {
 	public void setEcourse(List<EnrolledCourses> ecourse) {
 		this.ecourse = ecourse;
 	}
+
+	public int getAvgrating() {
+		return avgrating;
+	}
+
+	public void setAvgrating(int avgrating) {
+		this.avgrating = avgrating;
+	}
+
+	public int getEnrollments() {
+		return enrollments;
+	}
+
+	public void setEnrollments(int enrollments) {
+		this.enrollments = enrollments;
+	}
+
+	public int getTotalcomment() {
+		return totalcomment;
+	}
+
+	public void setTotalcomment(int totalcomment) {
+		this.totalcomment = totalcomment;
+	}
+
 
 	
 }

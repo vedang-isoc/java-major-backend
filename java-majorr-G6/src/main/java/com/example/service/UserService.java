@@ -21,5 +21,6 @@ public interface UserService {
 	public boolean Enroll(int cid,int uid);
 	public boolean nextVideo(int cid,int uid,int vid);
 	public boolean completeVideo(int cid,int uid,int vid);
+	
 
 }
