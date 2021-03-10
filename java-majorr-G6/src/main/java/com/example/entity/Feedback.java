@@ -19,6 +19,7 @@ public class Feedback {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int feedbackId;
 	private String feedback;
+	private int rating;
 
 //            @ManyToOne
 //            @JoinColumns({@JoinColumn(name="courseId", referencedColumnName = "courseId"),@JoinColumn(name="userId", referencedColumnName = "userId")})
@@ -41,11 +42,12 @@ public class Feedback {
 		this.user = user;
 	}
 
-	public Feedback(String feedback, Course course, User user) {
+	public Feedback(String feedback, Course course, User user,int rating) {
 		super();
 		this.feedback = feedback;
 		this.course = course;
 		this.user = user;
+		this.rating = rating;
 	}
 
 	public Feedback() {
@@ -89,6 +91,14 @@ public class Feedback {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
 	}
 	
 

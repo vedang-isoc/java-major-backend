@@ -1,11 +1,15 @@
 package com.example.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Entity
@@ -16,6 +20,19 @@ public class Video {
 
 	public Video() {
 		super();
+	}
+	
+	@JsonIgnore
+	@ManyToOne(targetEntity = Course.class ,fetch = FetchType.LAZY)
+	@JoinColumn(name="courseId")
+	private Course course;
+
+	public Course getCourse() {
+		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
 	}
 
 	private String videoName;
@@ -33,45 +50,47 @@ public class Video {
 		this.videoPath = videoPath;
 	}
 
-	protected int getVideoId() {
+	public int getVideoId() {
 		return videoId;
 	}
 
-	protected void setVideoId(int videoId) {
+	public void setVideoId(int videoId) {
 		this.videoId = videoId;
 	}
 
-	protected String getVideoName() {
+	public String getVideoName() {
 		return videoName;
 	}
 
-	protected void setVideoName(String videoName) {
+	public void setVideoName(String videoName) {
 		this.videoName = videoName;
 	}
 
-	protected String getVideoDesc() {
+	public String getVideoDesc() {
 		return videoDesc;
 	}
 
-	protected void setVideoDesc(String videoDesc) {
+	public void setVideoDesc(String videoDesc) {
 		this.videoDesc = videoDesc;
 	}
 
-	protected String getVideoPath() {
+	public String getVideoPath() {
 		return videoPath;
 	}
 
-	protected void setVideoPath(String videoPath) {
+	public void setVideoPath(String videoPath) {
 		this.videoPath = videoPath;
 	}
 
-	protected String getCourseName() {
+	public String getCourseName() {
 		return courseName;
 	}
 
-	protected void setCourseName(String courseName) {
+	public void setCourseName(String courseName) {
 		this.courseName = courseName;
 	}
+
+	
 
 	
 	

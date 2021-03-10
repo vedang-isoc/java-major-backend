@@ -1,7 +1,5 @@
 package com.example.entity;
-
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,12 +8,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 @Entity
 public class Course {
 	@Id
@@ -26,31 +26,41 @@ public class Course {
 	private String courseLogo;
 	private int coursePrice;
 	private int likes;
-
-	@JsonInclude
-	@Transient
-	private String categoryName;
-
+//	@JsonInclude
+//	@Transient
+//	private String categoryName;
+	
+	@ManyToOne(targetEntity = Category.class ,fetch = FetchType.LAZY)
+	@JoinColumn(name="categoryId")
+	private Category category;
+	
 	@OneToMany(targetEntity = Video.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "courseId", referencedColumnName = "courseId")
 	List<Video> video;
+	
+	@OneToMany(targetEntity = Like.class,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name="courseId", referencedColumnName = "courseId")
+    List<Like> likess;
+	
+	@OneToMany(targetEntity = Feedback.class,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name="courseId", referencedColumnName = "courseId")
+	List<Feedback> feedbacks;
 	
 	@OneToMany(targetEntity = Comment.class,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name="courseId", referencedColumnName = "courseId")
     List<Comment> comments;
 	
-	@OneToMany(targetEntity = Feedback.class,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name="courseId", referencedColumnName = "courseId")
-    List<Feedback> feedbacks;
-	
 	@OneToMany(targetEntity = EnrolledCourses.class,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name="courseId", referencedColumnName = "courseId")
-    List<EnrolledCourses> enrolledcourses;
-
-//	@OneToOne(fetch = FetchType.LAZY, optional = false)
-//	@JoinColumn(name = "resultID", nullable = false, referencedColumnName = "resultID")
-//	private Result result;
-
+	List<EnrolledCourses> ecourse;
+	@JsonIgnore
+	@JsonProperty(value = "likess")
+	public List<Like> getLikess() {
+		return likess;
+	}
+	public void setLikess(List<Like> likess) {
+		this.likess = likess;
+	}
 	public Course(String courseName, String courseDesc, String courseLogo, int coursePrice) {
 		super();
 		this.courseName = courseName;
@@ -58,109 +68,101 @@ public class Course {
 		this.courseLogo = courseLogo;
 		this.coursePrice = coursePrice;
 	}
-
+	public Course() {
+		super();
+	}
+	public int getCourseId() {
+		return courseId;
+	}
+	public void setCourseId(int courseId) {
+		this.courseId = courseId;
+	}
+	public String getCourseName() {
+		return courseName;
+	}
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
+	}
+	public String getCourseDesc() {
+		return courseDesc;
+	}
+	public void setCourseDesc(String courseDesc) {
+		this.courseDesc = courseDesc;
+	}
+	public String getCourseLogo() {
+		return courseLogo;
+	}
+	public void setCourseLogo(String courseLogo) {
+		this.courseLogo = courseLogo;
+	}
+	public int getCoursePrice() {
+		return coursePrice;
+	}
+	public void setCoursePrice(int coursePrice) {
+		this.coursePrice = coursePrice;
+	}
+	public int getLikes() {
+		return likes;
+	}
+	public void setLikes(int likes) {
+		this.likes = likes;
+	}
 	
-
-	public Course(int courseId) {
-		super();
-		this.courseId = courseId;
+	@JsonIgnore
+	@JsonProperty(value = "video")
+	public List<Video> getVideo() {
+		return video;
 	}
-
-	public Course(int courseId, List<Comment> comments) {
-		super();
-		this.courseId = courseId;
-		this.comments = comments;
+	public void setVideo(List<Video> video) {
+		this.video = video;
 	}
-
 	public Course(String courseName, String courseDesc, String courseLogo, int coursePrice, int likes) {
 		super();
 		this.courseName = courseName;
 		this.courseDesc = courseDesc;
 		this.courseLogo = courseLogo;
 		this.coursePrice = coursePrice;
-		this.likes = likes;
+		this.likes = 0;
 	}
-
-
-
-	public int getCourseId() {
-		return courseId;
+	@JsonIgnore
+	@JsonProperty(value = "feedbacks")
+	public List<Feedback> getFeedbacks() {
+		return feedbacks;
 	}
-
-	public void setCourseId(int courseId) {
-		this.courseId = courseId;
+	public void setFeedbacks(List<Feedback> feedbacks) {
+		this.feedbacks = feedbacks;
 	}
-
-	public String getCourseName() {
-		return courseName;
+	@JsonIgnore
+	@JsonProperty(value = "ecourse")
+	public List<EnrolledCourses> getEcourse() {
+		return ecourse;
 	}
-
-	public void setCourseName(String courseName) {
-		this.courseName = courseName;
+	public void setEcourse(List<EnrolledCourses> ecourse) {
+		this.ecourse = ecourse;
 	}
-
-	public String getCourseDesc() {
-		return courseDesc;
+	public String getCategory() {
+		return category.getCategoryName();
 	}
-
-	public void setCourseDesc(String courseDesc) {
-		this.courseDesc = courseDesc;
+	public void setCategory(Category category) {
+		this.category = category;
 	}
-
-	public String getCourseLogo() {
-		return courseLogo;
+	@JsonInclude
+	@Transient
+	private int rating;
+	
+	
+	public int getRating() {
+		return rating;
 	}
-
-	public void setCourseLogo(String courseLogo) {
-		this.courseLogo = courseLogo;
+	public void setRating(int rating) {
+		this.rating = rating;
 	}
-
-	public int getCoursePrice() {
-		return coursePrice;
-	}
-
-	public void setCoursePrice(int coursePrice) {
-		this.coursePrice = coursePrice;
-	}
-
-	public int getLikes() {
-		return likes;
-	}
-
-	public void setLikes(int likes) {
-		this.likes = likes;
-	}
-
-	public String getCategoryName() {
-		return categoryName;
-	}
-
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
-	}
-
-	public List<Video> getVideo() {
-		return video;
-	}
-
-	public void setVideo(List<Video> video) {
-		this.video = video;
-	}
-
 	public List<Comment> getComments() {
 		return comments;
 	}
-
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
-
-
-
-	public Course() {
-		super();
-	}
 	
 	
-
 }
