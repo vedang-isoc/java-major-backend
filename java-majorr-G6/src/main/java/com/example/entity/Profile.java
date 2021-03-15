@@ -2,6 +2,7 @@ package com.example.entity;
 
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -22,7 +23,7 @@ public class Profile {
 	private SerialBlob userImage;
 	private Date birthdate;
 	private String gender;
-	 @OneToOne(fetch = FetchType.LAZY,
+	 @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,
 	    		optional = false)
 	 @JoinColumn(name="userId",nullable = false,referencedColumnName = "userId")
 	 private User user;

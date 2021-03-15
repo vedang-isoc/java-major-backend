@@ -3,6 +3,7 @@ package com.example.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.example.entity.Comment;
 import com.example.entity.Course;
@@ -13,6 +14,8 @@ import com.example.repositiories.CourseRepo;
 import com.example.repositiories.EnrolledCourseRepo;
 import com.example.repositiories.FeedbackRepo;
 
+
+@Service
 public class AdminServiceImpl implements AdminService{
 	@Autowired
 	CourseRepo cr;

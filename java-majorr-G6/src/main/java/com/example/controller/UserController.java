@@ -1,8 +1,10 @@
 package com.example.controller;
 
+import java.net.http.HttpRequest;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,7 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.entity.Course;
@@ -52,7 +56,7 @@ public class UserController {
 	}
 	@GetMapping(path="/isCourseCompleted/{cid}")
 	public boolean test(@PathVariable int cid) {
-		return uservice.isCourseCompleted(4,cid);
+		return uservice.isCourseCompleted(112,cid);
 		
 	}
 	@GetMapping(path="/enrolledcourses")
@@ -101,6 +105,30 @@ public class UserController {
 		
 		
 		return uservice.completeVideo(cid, uid, vid);
+	}
+	@PutMapping("/incrementfa/{username}")
+	public boolean ifa(@PathVariable String username) {
+		return uservice.incrementfailed(username);
+	}
+    
+	@PutMapping("/clearfa/{userid}")
+	public boolean cfa(@PathVariable int userid) {
+		return uservice.clearfalied(userid);
+		
+	}
+	@GetMapping("/isLocked/{username}")
+	public boolean isLocked(@PathVariable String username) {
+		return uservice.isLocked(username);
+		
+	}
+	@PostMapping(path="/adduser")
+	@ResponseStatus(code = HttpStatus.CREATED)
+	public String createUser(@RequestBody User user) {
+		return uservice.createUser(user);
+	}
+	@GetMapping(path="isActivated/{userid}")
+	public boolean isActivated(@PathVariable int userid) {
+		return uservice.isActivated(userid);
 	}
 	
 

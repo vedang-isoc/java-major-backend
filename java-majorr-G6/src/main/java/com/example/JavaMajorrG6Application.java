@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.example.entity.Category;
 import com.example.entity.Course;
@@ -52,8 +53,9 @@ public class JavaMajorrG6Application implements CommandLineRunner {
 //		courses.add(course1);courses.add(course);
 //		Category category=new Category("frontend", "learn frontend", null, courses);
 //		catr.save(category);
-//		Profile p=new Profile("Vedang T", null, null, "Male");
-//		User u=new User("uname", "abc@gmail.com", "123xyz", true, true, "kjfsgbikrg");
+//
+//		Profile p=new Profile("Devang S", null, null, "Male");
+//		User u=new User("dev//1", "abc@gmail.com",  new BCryptPasswordEncoder().encode("123xyzz"), false, false, "kjfsgbikrg");
 //		p.setUser(u);
 //		u.setProfile(p);
 //		ur.save(u);

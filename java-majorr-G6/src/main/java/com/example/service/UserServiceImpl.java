@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.entity.Certificate;
@@ -42,6 +43,7 @@ import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.html.WebColors;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -201,8 +203,11 @@ public class UserServiceImpl implements UserService{
 			Font font = FontFactory.getFont(FontFactory.COURIER_BOLD, 30, BaseColor.BLACK);
 			Chunk chunk = new Chunk("Certificate Of Completion", font);
 			Paragraph preface = new Paragraph(chunk); 
+			
 			preface.setAlignment(Element.ALIGN_CENTER);
 			document.add(preface);
+			
+			
 			
 			Image img = Image.getInstance(course.get().getCourseLogo());
 	
@@ -329,6 +334,62 @@ public class UserServiceImpl implements UserService{
 		
 		return false;
 	}
+	@Override
+	public boolean incrementfailed(String username) {
+		// TODO Auto-generated method stub
+		User user = ur.findByUsername(username);
+		if(user!=null) {
+			if(user.getFailedattempts()==2) {
+				lockAccount(user.getUserId());
+			}
+			if(user.getFailedattempts()<3) {
+				int temp=user.getFailedattempts();
+				user.setFailedattempts(++temp);
+				ur.save(user);
+			}
+			
+		}
+		
+		
+		return false;
+	}
+
+	@Override
+	public boolean clearfalied(int uid) {
+		unlocakAccount(uid);
+		Optional<User> user = ur.findById(uid);
+		user.get().setFailedattempts(0);
+		ur.save(user.get());
+		
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isLocked(String username) {
+		// TODO Auto-generated method stub
+		User user = ur.findByUsername(username);
+		return user.isLocked();
+	}
+	
+	
+	@Override
+	public String createUser(User user) {
+		Profile p=new Profile();
+		User u=new User(user.getUserId(), user.getUsername(), user.getEmail(), new BCryptPasswordEncoder().encode(user.getPassword()), false, false, "user");
+		p.setUser(u);
+		u.setProfile(p);
+		ur.save(u);
+		return "successfully created user";
+	}
+
+	@Override
+	public boolean isActivated(int uid) {
+		// TODO Auto-generated method stub
+		Optional<User> user = ur.findById(uid);
+		return user.get().isActivated();
+	}
+
 
 	
 }
