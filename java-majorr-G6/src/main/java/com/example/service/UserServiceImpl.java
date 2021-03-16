@@ -389,6 +389,27 @@ public class UserServiceImpl implements UserService{
 		Optional<User> user = ur.findById(uid);
 		return user.get().isActivated();
 	}
+	@Override
+	public Profile createProfile(int userid, Profile profile) {
+		Optional<User> user = ur.findUserDetails(userid);
+		Profile pp = pfr.findByUser(user.get());
+		pp.setBirthdate(profile.getBirthdate());
+		pp.setFullName(profile.getFullName());
+		pp.setGender(profile.getGender());
+		//pp.setUserImage(profile.getUserImage());
+		return pfr.save(pp);
+
+	}
+
+	@Override
+	public boolean isProfileCreated(int uid) {
+		// TODO Auto-generated method stub
+		Optional<User> user = ur.findById(uid);
+		Profile profile = pfr.findByUser(user.get());
+		if(profile.getFullName()!=null)
+		return true;
+		return false;
+	}
 
 
 	

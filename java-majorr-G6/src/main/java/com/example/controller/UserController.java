@@ -1,8 +1,14 @@
 package com.example.controller;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.http.HttpRequest;
+
 import java.util.List;
 
+import javax.sql.rowset.serial.SerialBlob;
+
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -14,10 +20,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.entity.Course;
+import com.example.entity.Profile;
 import com.example.entity.User;
 import com.example.entity.Video;
 import com.example.service.UserService;
@@ -129,6 +138,27 @@ public class UserController {
 	@GetMapping(path="isActivated/{userid}")
 	public boolean isActivated(@PathVariable int userid) {
 		return uservice.isActivated(userid);
+	}
+	@PostMapping("/profile/{userid}") //we have send userid while creating profile
+	@ResponseStatus(code = HttpStatus.CREATED)
+	public Profile createProfile(@PathVariable int userid,@RequestBody Profile profile,@RequestParam("myFile") MultipartFile file) {
+		//file from model attribute 
+		
+		//profile.setUserImage(file.getInputStream());
+		try {
+			InputStream inputStream = file.getInputStream();
+			byte[] b = IOUtils.toByteArray(inputStream);
+			SerialBlob blob = new javax.sql.rowset.serial.SerialBlob(b);
+			profile.setUserImage(blob);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return uservice.createProfile(userid, profile);
+	}
+	@GetMapping("/isProfileCreated/{userid}")
+	public boolean isPC(@PathVariable int userid) {
+		return uservice.isProfileCreated(userid);
 	}
 	
 

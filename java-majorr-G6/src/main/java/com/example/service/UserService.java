@@ -3,6 +3,7 @@ package com.example.service;
 import java.util.List;
 
 import com.example.entity.Course;
+import com.example.entity.Profile;
 import com.example.entity.User;
 import com.example.entity.Video;
 
@@ -26,6 +27,8 @@ public interface UserService {
 	public boolean isLocked(String username);
 	public abstract String createUser(User user);
 	public boolean isActivated(int uid);
+	public abstract Profile createProfile(int userid, Profile profile);
+	public boolean isProfileCreated(int uid);
 	
 
 }

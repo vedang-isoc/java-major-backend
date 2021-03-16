@@ -1,5 +1,6 @@
 package com.example.entity;
 
+import java.io.InputStream;
 import java.sql.Date;
 
 import javax.persistence.CascadeType;
@@ -33,6 +34,7 @@ public class Profile {
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
 	}
+
 	public SerialBlob getUserImage() {
 		return userImage;
 	}
@@ -57,7 +59,7 @@ public class Profile {
 	public Profile(String fullName, SerialBlob userImage, Date birthdate, String gender) {
 		super();
 		this.fullName = fullName;
-		this.userImage = userImage;
+		this.userImage = null;
 		this.birthdate = birthdate;
 		this.gender = gender;
 	}
@@ -67,6 +69,13 @@ public class Profile {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	public int getProfileId() {
+		return profileId;
+	}
+	public void setProfileId(int profileId) {
+		this.profileId = profileId;
+	}
+
 	
 	
 }
