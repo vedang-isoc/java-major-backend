@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.entity.Category;
 import com.example.entity.Certificate;
 import com.example.entity.Comment;
 import com.example.entity.Course;
@@ -23,6 +24,7 @@ import com.example.entity.Like;
 import com.example.entity.Profile;
 import com.example.entity.User;
 import com.example.entity.Video;
+import com.example.repositiories.CategoryRepo;
 import com.example.repositiories.CertiRepo;
 import com.example.repositiories.CommentRepo;
 import com.example.repositiories.CourseRepo;
@@ -71,6 +73,8 @@ public class UserServiceImpl implements UserService{
 	CertiRepo ctr;
 	@Autowired
 	CommentRepo cmtr;
+	@Autowired
+	CategoryRepo catr;
 	
 
 	@Override
@@ -335,7 +339,7 @@ public class UserServiceImpl implements UserService{
 		return false;
 	}
 	@Override
-	public boolean incrementfailed(String username) {
+	public int incrementfailed(String username) {
 		// TODO Auto-generated method stub
 		User user = ur.findByUsername(username);
 		if(user!=null) {
@@ -347,11 +351,12 @@ public class UserServiceImpl implements UserService{
 				user.setFailedattempts(++temp);
 				ur.save(user);
 			}
+			return user.getFailedattempts();
 			
 		}
 		
 		
-		return false;
+		return -1;
 	}
 
 	@Override
@@ -369,6 +374,9 @@ public class UserServiceImpl implements UserService{
 	public boolean isLocked(String username) {
 		// TODO Auto-generated method stub
 		User user = ur.findByUsername(username);
+		if(user==null) {
+			return false;
+		}
 		return user.isLocked();
 	}
 	
@@ -409,6 +417,44 @@ public class UserServiceImpl implements UserService{
 		if(profile.getFullName()!=null)
 		return true;
 		return false;
+	}
+	public boolean checkUsername(String username) {
+		if(ur.checkUserName(username) == null) {
+			return false;
+		}
+		return true;
+	}
+	public boolean checkEmail(String email) {
+		if(ur.checkEmail(email) == null) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public boolean checkPwd(String password, int uid) {
+		// TODO Auto-generated method stub
+		Optional<User> user = ur.findById(uid);
+		if(user.get().getPassword().equals(new BCryptPasswordEncoder().encode(password))) {
+			
+			return true;
+		}
+		return false;
+	}
+	@Override
+	public boolean deleteUser(int id) {
+		
+		Profile profile = pfr.findByUser(ur.findById(id).get());
+		pfr.deleteById(profile.getProfileId());
+		ur.deleteById(id);
+		return false;
+	}
+
+	@Override
+	public List<Course> findCourseByCat(int catid) {
+		// TODO Auto-generated method stub
+		Optional<Category> category = catr.findById(catid);
+		return cr.findAllByCategory(category.get());
 	}
 
 

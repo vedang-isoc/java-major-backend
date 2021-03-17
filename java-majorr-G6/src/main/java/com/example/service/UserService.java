@@ -22,13 +22,17 @@ public interface UserService {
 	public boolean Enroll(int cid,int uid);
 	public boolean nextVideo(int cid,int uid,int vid);
 	public boolean completeVideo(int cid,int uid,int vid);
-	public boolean incrementfailed(String username);
+	public int incrementfailed(String username);
 	public boolean clearfalied(int uid);
 	public boolean isLocked(String username);
 	public abstract String createUser(User user);
 	public boolean isActivated(int uid);
 	public abstract Profile createProfile(int userid, Profile profile);
 	public boolean isProfileCreated(int uid);
-	
+	public abstract boolean checkUsername(String username);
+	public abstract boolean checkEmail(String email);
+	public boolean checkPwd(String password,int uid);
+	public abstract boolean deleteUser(int id);
+	public List<Course> findCourseByCat(int catid);
 
 }

@@ -33,6 +33,7 @@ public class AdminServiceImpl implements AdminService{
 		List<Feedback> feedbacks=fr.findAll();
 		List<EnrolledCourses> ecs=ecr.findAll();
 		for (int i=0;i<courses.size();i++) {
+			courses.get(i).setVideosize(courses.get(i).getVideo().size());
 			for(int j=0;j<comments.size();j++) {
 				if(courses.get(i).getCourseId()==comments.get(j).getCourse().getCourseId() ) {
 					courses.get(i).setTotalcomment(courses.get(i).getTotalcomment()+1);

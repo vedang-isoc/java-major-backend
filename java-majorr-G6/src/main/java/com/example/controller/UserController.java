@@ -116,7 +116,7 @@ public class UserController {
 		return uservice.completeVideo(cid, uid, vid);
 	}
 	@PutMapping("/incrementfa/{username}")
-	public boolean ifa(@PathVariable String username) {
+	public int ifa(@PathVariable String username) {
 		return uservice.incrementfailed(username);
 	}
     
@@ -133,6 +133,7 @@ public class UserController {
 	@PostMapping(path="/adduser")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public String createUser(@RequestBody User user) {
+		
 		return uservice.createUser(user);
 	}
 	@GetMapping(path="isActivated/{userid}")
@@ -160,7 +161,27 @@ public class UserController {
 	public boolean isPC(@PathVariable int userid) {
 		return uservice.isProfileCreated(userid);
 	}
+	@GetMapping("/username/{username}")
+	public boolean checkUsername(@PathVariable String username) {
+		return uservice.checkUsername(username);
+	}
+	@GetMapping("/email/{email}")
+	public boolean checkEmail(@PathVariable String email) {
+		return uservice.checkEmail(email);
+	}
+	@GetMapping("/checkpwd/{uid}/{password}")
+	public boolean checkpwd(@PathVariable String password,@PathVariable int uid) {
+		return uservice.checkPwd(password, uid);
+	}
+	@DeleteMapping("/delete/{id}")
+	public boolean deleteUser(@PathVariable int id) {
+		return uservice.deleteUser(id);
+	}
 	
+	@GetMapping("/coursesbycatId/{catId}")
+	public List<Course> getCourseById(@PathVariable int catId){
+		return uservice.findCourseByCat(catId);
+	}
 
 	
 

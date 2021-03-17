@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
@@ -45,6 +46,9 @@ public class Course {
 	@Transient
 	private int totalcomment;
 	
+	@JsonInclude
+	@Transient
+	private int videosize;
 	
 	
 
@@ -63,6 +67,10 @@ public class Course {
 	@OneToMany(targetEntity = EnrolledCourses.class,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name="courseId", referencedColumnName = "courseId")
 	List<EnrolledCourses> ecourse; 
+	
+	@ManyToOne(targetEntity = Category.class ,fetch = FetchType.LAZY)
+	@JoinColumn(name="categoryId")
+	private Category category;
 
 
 //	@OneToOne(fetch = FetchType.LAZY, optional = false)
@@ -134,6 +142,14 @@ public class Course {
 		return likes;
 	}
 
+	public int getVideosize() {
+		return videosize;
+	}
+
+	public void setVideosize(int videosize) {
+		this.videosize = videosize;
+	}
+
 	public void setLikes(int likes) {
 		this.likes = likes;
 	}
@@ -146,8 +162,8 @@ public class Course {
 		this.categoryName = categoryName;
 	}
 	
-	public int getVideo() {
-		return video.size();
+	public List<Video> getVideo() {
+		return video;
 	}
 
 	public void setVideo(List<Video> video) {

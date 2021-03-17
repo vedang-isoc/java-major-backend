@@ -38,4 +38,10 @@ public class Category {
 		this.categoryLogo = categoryLogo;
 		this.courses = courses;
 	}
+
+
+
+	public Category() {
+		super();
+	}
 }
